@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      if (sessionStorage.getItem("verified") !== "yes") {
+        window.location.replace("index.html");
+      }
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You 💗</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Quicksand:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Remove blue tap highlight and focus outline */
+
+      *:focus {
+        outline: none;
+      }
+
+      img,
+      div {
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 50px;
+        align-items: center;
+        background: linear-gradient(135deg, #fff1f6, #fadadd);
+        font-family: "Playfair Display", serif;
+        overflow: hidden;
+        opacity: 0;
+        animation: fadeIn 1.2s ease forwards;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("images/bgindex.png") center/cover no-repeat;
+        opacity: 0.25;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .intro-text {
+        font-size: 30px;
+        color: #b8326f;
+        margin-bottom: 40px;
+        text-align: center;
+      }
+
+      .wrapper {
+        display: flex;
+        gap: 80px;
+      }
+
+      .envelope-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.4s ease;
+      }
+
+      .envelope-box:hover {
+        transform: translateY(-10px) scale(1.03);
+      }
+
+      .envelope-img {
+        width: 220px;
+        height: auto;
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+        transition: transform 0.4s ease;
+      }
+
+      .bg-bottom {
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        opacity: 0.2;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .gift-label {
+        margin-top: 20px;
+        font-family: "Quicksand", sans-serif;
+        font-size: 18px;
+        color: #b8326f;
+        letter-spacing: 1px;
+      }
+
+      .fade-out {
+        animation: fadeOut 0.8s ease forwards;
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .wrapper {
+          flex-direction: column;
+          gap: 40px;
+        }
+      }
+
+      .transition-screen {
+        position: fixed;
+        inset: 0;
+        background: #fadadd;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+      }
+
+      .transition-screen.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .transition-text {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        color: #b8326f;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="images/winged-envelope.png" class="bg-bottom" />
+    <div class="intro-text">I made something for you 🎁💝</div>
+
+    <div class="wrapper">
+      <div class="envelope-box" onclick="openBouquet(this)">
+        <img src="images/evp.png" class="envelope-img" />
+        <div class="gift-label">Gift 1</div>
+      </div>
+
+      <div class="envelope-box" onclick="openWebsite(this)">
+        <img src="images/evp.png" class="envelope-img" />
+        <div class="gift-label">Gift 2</div>
+      </div>
+    </div>
+
+    <script>
+      function openBouquet(element) {
+        triggerTransition(
+          element,
+          "https://digibouquet.vercel.app/bouquet/bc29c7af-f2d5-48b4-a8eb-121ede45d1ff",
+          "A little bouquet for you 🌸",
+        );
+      }
+      function openWebsite(element) {
+        triggerTransition(element, "ownbig.html", "confrim your identity!!!");
+      }
+
+      function triggerTransition(element, url, message) {
+        const screen = document.getElementById("transitionScreen");
+        const text = document.getElementById("transitionText");
+
+        text.innerText = message;
+
+        element.style.transform = "scale(1.08)";
+
+        screen.classList.add("show");
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 2000);
+      }
+    </script>
+
+    <div id="transitionScreen" class="transition-screen">
+      <div id="transitionText" class="transition-text"></div>
+    </div>
+  </body>
+</html>

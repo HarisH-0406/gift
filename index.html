@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Private Page</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #fff1f6, #fadadd);
+        font-family: Arial;
+      }
+
+      .box {
+        background: white;
+        padding: 40px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      h2 {
+        color: #d94f8a;
+        margin-bottom: 20px;
+      }
+
+      input {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        width: 200px;
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #d94f8a;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <h2>Enter Password 💗</h2>
+
+      <input type="password" id="pass" placeholder="Password" />
+
+      <br />
+
+      <button onclick="check()">Enter</button>
+    </div>
+
+    <script>
+      function check() {
+        const password = "66666666";
+
+        const input = document.getElementById("pass").value;
+
+        if (input === password) {
+          sessionStorage.setItem("verified", "yes");
+
+          window.location.href = "ownbig.html";
+        } else {
+          alert("Wrong password");
+        }
+      }
+    </script>
+  </body>
+</html>

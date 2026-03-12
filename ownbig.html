@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      if (sessionStorage.getItem("verified") !== "yes") {
+        window.location.replace("index.html");
+      }
+    </script>
+
+    <!-- =====================================================
+       GLOBAL META + RESOURCES
+       - Character encoding
+       - Viewport
+       - Fonts
+       - Confetti library
+       - Main stylesheet
+    ====================================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For birthday💗</title>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Quicksand:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         MAIN SLIDER CONTAINER
+         - Controls horizontal navigation between pages
+         - 4 sections (Page 1 → Page 4)
+    ====================================================== -->
+    <div class="container" id="slider">
+      <!-- =====================================================
+           PAGE 1 — ENTRY CONFIRMATION
+           - Asks identity question
+           - Shows confirmation overlay
+      ====================================================== -->
+      <div class="section">
+        <img src="images/decor/p1tbdr.png" class="p1-top-border" />
+        <img src="images/decor/a.png" class="p1-side-hearts" />
+        <img src="images/decor/h.png" class="p1-bottom-heart" />
+        <div class="love-emitter" id="loveEmitter"></div>
+        <div class="center-box">
+          <h2>Vaanga Welcome!🙏 <br />who are you?</h2>
+          <br /><br />
+          <button class="choice-btn yes-btn" onclick="confirmYes()">
+            Your Girlfriend❤️
+          </button>
+          <button class="choice-btn no-btn" onclick="showPopup()">
+            your Enemy👿
+          </button>
+        </div>
+
+        <div id="confirmOverlay" class="confirm-overlay">
+          <div class="confirm-box">
+            <h3>OHH! Vaanga Vaanga 😌💗</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           PAGE 2 — QUIZ PAGE
+           - 3 questions
+           - Progress dots
+           - Pass message
+           - Loader transition to Page 3
+      ====================================================== -->
+      <div class="section">
+        <img src="images/p2heart.png" class="bg-heart heart1" />
+        <img src="images/p2heart.png" class="bg-heart heart2" />
+        <img src="images/p2heart.png" class="bg-heart heart3" />
+        <img src="images/p2heart.png" class="bg-heart heart4" />
+
+        <div class="quiz-frame">
+          <div class="quiz-content">
+            <!-- Quiz Progress Dots -->
+            <div class="quiz-progress">
+              <span class="progress-dot active" id="dot1"></span>
+              <span class="progress-dot" id="dot2"></span>
+              <span class="progress-dot" id="dot3"></span>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="quiz-question" id="q1">
+              <h3>When did we first meet? 💗</h3>
+              <button class="quiz-option" onclick="checkAnswer(true, this)">
+                The best day ever 😌
+              </button>
+              <button class="quiz-option" onclick="checkAnswer(false, this)">
+                I forgot 🙄
+              </button>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="quiz-question" id="q2" style="display: none">
+              <h3>Who said “I love you” first? 😏</h3>
+              <button class="quiz-option" onclick="checkAnswer(false, this)">
+                You
+              </button>
+              <button class="quiz-option" onclick="checkAnswer(true, this)">
+                Me
+              </button>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="quiz-question" id="q3" style="display: none">
+              <h3>What is our favorite chat time? 🥰</h3>
+              <button class="quiz-option" onclick="checkAnswer(true, this)">
+                Midnight talks
+              </button>
+              <button class="quiz-option" onclick="checkAnswer(false, this)">
+                Morning fights
+              </button>
+            </div>
+
+            <!-- PASS MESSAGE + LOADER -->
+            <div class="quiz-question" id="passMessage" style="display: none">
+              <h3>YOU PASSED<br />100/100 😌💗</h3>
+
+              <!-- Loader placed BETWEEN Page 2 → Page 3 -->
+              <div id="quizLoader" class="quiz-loader" style="display: none">
+                <div class="loader-bar">
+                  <div class="loader-fill"></div>
+                  <img
+                    src="images/h1.png"
+                    class="loader-heart-img"
+                    id="quizLoaderHeart"
+                  />
+                </div>
+                <div class="loader-text"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Intro Overlay -->
+          <div id="quizIntro" class="quiz-intro">
+            <div class="intro-box">
+              <p id="introText">
+                Before you enter...<br />
+                First ithula PASS pannuga 📝🖊️
+              </p>
+              <button id="startQuizBtn" onclick="startQuiz()">Start 😌</button>
+            </div>
+          </div>
+        </div>
+
+        <img src="images/p2btmbr.png" class="p2-bottom-hearts" />
+
+        <button class="nav-btn back-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn next-btn" onclick="nextSlide()">→</button>
+      </div>
+
+      <!-- =====================================================
+           PAGE 3 — STORY / GALLERY
+           - Slideshow of 5 images
+           - Progress dots
+           - Final caption before Page 4
+      ====================================================== -->
+      <div class="section">
+        <div class="story-container">
+          <h2 class="story-title">Our Story So Far 💗</h2>
+
+          <div class="story-decor">
+            <img
+              src="images/decor/bfleft.png"
+              class="p3-butterfly left-butterfly"
+            />
+            <img
+              src="images/decor/bfright.png"
+              class="p3-butterfly right-butterfly"
+            />
+            <img src="images/decor/b.png" class="story-hanging" />
+            <img src="images/decor/ted.png" class="story-teddy" />
+          </div>
+
+          <div class="story-frame">
+            <img
+              id="storyImage"
+              class="story-image"
+              src="images/ori1.jpg"
+              alt="Memory"
+              loading="lazy"
+            />
+
+            <div id="storyCaption" class="story-caption">
+              Our first photo together 💗
+            </div>
+
+            <div class="story-progress">
+              <span class="story-dot active" id="sDot1"></span>
+              <span class="story-dot" id="sDot2"></span>
+              <span class="story-dot" id="sDot3"></span>
+              <span class="story-dot" id="sDot4"></span>
+              <span class="story-dot" id="sDot5"></span>
+            </div>
+
+            <div class="story-controls">
+              <button class="story-arrow" onclick="prevStoryPhoto()">
+                &lt;
+              </button>
+              <button class="story-arrow" onclick="nextStoryPhoto()">
+                &gt;
+              </button>
+            </div>
+          </div>
+        </div>
+        <img src="images/decor/p3btmbr.png" class="p3-couple-outline" />
+
+        <button class="nav-btn back-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn next-btn" onclick="nextSlide()">→</button>
+      </div>
+
+      <!-- =====================================================
+           PAGE 4 — LETTER PAGE
+           - Emotional message
+           - Final reveal button
+      ====================================================== -->
+      <div class="section">
+        <div class="letter-container">
+          <h2 class="letter-title">A Message For You 💗</h2>
+
+          <div class="letter-card" id="letterCard">
+            <img src="images/decor/p4innerbg.png" class="letter-watermark" />
+            <p class="letter-text">
+              You are not just my girlfriend.<br /><br />
+              You are my peace. My happiness. My favorite notification.<br /><br />
+              Every moment with you feels special.<br /><br />
+              And today, I just want to remind you how much you mean to me.
+            </p>
+          </div>
+
+          <button class="letter-btn" onclick="goToCelebration()">
+            One More Thing... 💌
+          </button>
+        </div>
+
+        <button class="nav-btn back-btn" onclick="prevSlide()">←</button>
+      </div>
+
+      <!-- =====================================================
+     PAGE 5 — CELEBRATION
+===================================================== -->
+      <div class="section celebration-section">
+        <img src="images/hug.png" class="p5-couple" onclick="emitHearts()" />
+        <!-- Top hanging decoration -->
+        <img
+          src="images/p5frame1.png"
+          class="p5-photo-frame"
+          onclick="openReview()"
+        />
+        <!-- Left balloon -->
+        <img
+          src="images/balloon.png"
+          class="p5-balloon-left"
+          onclick="goBackToLetter()"
+        />
+
+        <!-- Right balloon -->
+        <img src="images/balloon.png" class="p5-balloon-right" />
+
+        <!-- RCupid -->
+        <img src="images/Lcupid.png" class="p5-Rcupid" onclick="emitHugs()" />
+
+        <!-- LCupid -->
+        <img src="images/Rcupid.png" class="p5-Lcupid" onclick="emitKisses()" />
+
+        <!-- Bottom heart garden -->
+        <img src="images/garden.png" class="p5-garden" />
+
+        <div class="p5-emitter" id="p5Emitter"></div>
+
+        <div class="black-screen" id="blackScreen">
+          <div class="black-text" id="blackText"></div>
+        </div>
+
+        <div class="celebration-content" id="celebrationContent">
+          <img src="images/decor/heart-outline.png" class="p5-heart-bg" />
+          <h1 class="celebration-title">HAPPY BIRTHDAY MY LOVE 💗</h1>
+          <p class="celebration-message">
+            You deserve all the happiness in this world.<br />
+            And I promise to always stand beside you.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 5 LOVE LOADING SCREEN -->
+    <div id="loveLoader" class="love-loader">
+      <div class="heart-container">
+        <!-- SVG HEART -->
+        <svg viewBox="0 0 200 180" class="heart-svg">
+          <defs>
+            <clipPath id="heartClip">
+              <path
+                d="M100 170
+                C 55 130, 25 100, 40 75
+                C 55 50, 80 55, 100 75
+                C 120 55, 145 50, 160 75
+                C 175 100, 145 130, 100 170
+                Z"
+              />
+            </clipPath>
+
+            <filter id="glassGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="3"
+                result="blur"
+              />
+              <!-- HEART glow tdDeviation="3" -->
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Heart Outline -->
+          <path
+            d="M100 170
+                C 55 130, 25 100, 40 75
+                C 55 50, 80 55, 100 75
+                C 120 55, 145 50, 160 75
+                C 175 100, 145 130, 100 170
+                Z"
+            fill="none"
+            stroke="#ff4fa3"
+            stroke-width="4"
+            filter="url(#glassGlow)"
+          />
+          <!--This creates a soft glass reflection curve.-->
+          <path
+            d="M70 95
+                Q100 55 130 95"
+            fill="none"
+            stroke="rgba(255,255,255,0.6)"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+
+          <!-- Water Container -->
+          <g clip-path="url(#heartClip)">
+            <!-- WHITE BACKGROUND INSIDE HEART -->
+            <rect x="0" y="0" width="200" height="180" fill="white" />
+            <!-- WATER FILL -->
+            <g id="waveGroup" transform="translate(0,180)">
+              <path
+                id="wavePath"
+                d="M0 20 Q25 0 50 20 T100 20 T150 20 T200 20 V180 H0 Z"
+                fill="url(#waterGradient)"
+              />
+
+              <path
+                id="waveShine"
+                d="M0 25 Q50 25 100 25 T200 25"
+                fill="none"
+                stroke="rgba(255,255,255,0.6)"
+                stroke-width="2"
+              />
+            </g>
+
+            <!-- BUBBLE LAYER -->
+            <g id="bubbleLayer"></g>
+          </g>
+
+          <!-- Gradient -->
+          <defs>
+            <linearGradient id="waterGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#ffb6d9" />
+              <stop offset="50%" stop-color="#ff4fa3" />
+              <stop offset="100%" stop-color="#d63384" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <p class="love-caption">Loading something special for you…</p>
+
+      <div class="love-bar">
+        <div class="love-bar-fill" id="loveBarFill"></div>
+      </div>
+
+      <div class="soft-wash" id="softWash"></div>
+    </div>
+
+    <!-- Global Popup -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <p>GET OUT👊💢</p>
+        <button onclick="closePopup()">😅</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="pagefive.css" />
+    <script src="pagefive.js"></script>
+  </body>
+</html>

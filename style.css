@@ -1,0 +1,958 @@
+/* =====================================================
+   GLOBAL
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* remove mobile tap highlight */
+button,
+img {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================
+   PAGE FADE-IN (MAIN.HTML)
+========================================= */
+
+body {
+  opacity: 0;
+  animation: pageFadeIn 0.9s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =====================================================
+   SLIDER SYSTEM (STABLE 400vw)
+===================================================== */
+.container {
+  display: flex;
+  width: 500vw;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.section {
+  width: 100vw;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  background: #fadadd;
+  overflow: hidden;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+.choice-btn {
+  display: block;
+  width: 220px;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes-btn {
+  background: #d94f8a;
+  border: 2px solid white;
+  color: white;
+}
+
+.no-btn {
+  background: white;
+  color: #d94f8a;
+  border: 2px solid #d94f8a;
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+.nav-btn {
+  position: absolute;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #d94f8a;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.next-btn {
+  right: 20px;
+}
+.back-btn {
+  left: 20px;
+}
+
+/* =====================================================
+   CONFIRM OVERLAY
+===================================================== */
+.confirm-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.confirm-overlay.show {
+  display: flex;
+}
+
+.confirm-box {
+  background: white;
+  padding: 25px 40px;
+  border-radius: 18px;
+  border: 3px solid #d94f8a;
+  font-family: "Playfair Display", serif;
+}
+
+/* =====================================
+   POPUP BUTTON REFINED
+===================================== */
+
+.popup-content {
+  text-align: center; /* ensures centering */
+}
+
+.popup-content button {
+  display: block;
+  margin: 18px auto 0 auto; /* centers horizontally */
+  padding: 8px 18px; /* smaller size */
+  border-radius: 25px;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #d94f8a; /* white border added */
+  background: #d94f8a;
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  font-size: 13px; /* slightly smaller text */
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.popup-content button:hover {
+  transform: scale(1.08);
+}
+
+/* =========================================
+   MAGIC PULSE FOR IDENTITY CONFIRM
+========================================= */
+
+.magic-pulse {
+  animation: magicPulse 0.8s ease;
+}
+
+@keyframes magicPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(217, 79, 138, 0);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(217, 79, 138, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(217, 79, 138, 0);
+  }
+}
+
+/* =========================
+PAGE 1 TOP BORDER
+========================= */
+
+.p1-top-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================
+PAGE 1 SIDE HEARTS
+========================= */
+
+.p1-side-hearts {
+  position: absolute;
+  right: -50px;
+  bottom: 200px;
+  width: 88%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  transform: rotate(0deg);
+}
+
+/* =========================
+PAGE 1 BOTTOM HEART
+========================= */
+
+.p1-bottom-heart {
+  position: absolute;
+  bottom: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==============================
+   HEART EMERGENCE ANIMATION
+============================== */
+
+.love-emitter {
+  position: absolute;
+  left: 48%;
+  top: 90%; /* roughly forehead area */
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 26px;
+  opacity: 0;
+  animation: floatHeart 1.8s ease-out forwards;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  70% {
+    transform: translate(calc(-50% + var(--drift)), -150px) scale(0.9);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(calc(-50% + var(--drift)), -220px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   PAGE 1 DRAMATIC UNLOCK EFFECT
+========================================= */
+
+.section:first-child .center-box {
+  opacity: 0;
+  transform: scale(0.94);
+  animation: identityReveal 1s ease forwards;
+  animation-delay: 0.3s;
+  margin-top: -50px;
+}
+
+@keyframes identityReveal {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Glow effect on Yes button */
+.yes-btn:hover {
+  box-shadow: 0 0 18px rgba(217, 79, 138, 0.6);
+  transform: scale(1.05);
+}
+
+/* =====================================================
+   QUIZ FRAME
+===================================================== */
+/* ==============================
+   PAGE 2 HEART BACKGROUND
+============================== */
+
+.section:nth-child(2) {
+  position: relative;
+}
+
+.bg-heart {
+  position: absolute;
+  opacity: 1; /* very soft */
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==============================
+   QUIZ BORDER LAYER
+============================== */
+
+.section:nth-child(2) .quiz-frame {
+  position: relative;
+  width: 85%;
+  max-width: 360px;
+  min-height: 360px;
+  padding: 45px 30px 60px 30px;
+  box-sizing: border-box;
+  background: #fff4f8;
+  border-radius: 20px;
+  border: 2px solid #d94f8a; /* thin outer hairline */
+
+  box-shadow:
+    0 0 0 4px white,
+    /* white middle ring */ 0 0 0 5px #d94f8a; /* subtle outer reinforcement */
+  z-index: 2;
+  text-align: center;
+  overflow: hidden;
+}
+
+.section:nth-child(2) .quiz-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/decor/p2in.png") left -25px bottom -5px / 150px
+    no-repeat;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Individual positioning */
+
+/* Base heart style */
+.section:nth-child(2) .bg-heart {
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/*left heart (keep) */
+.section:nth-child(2) .heart1 {
+  width: 130px;
+  top: 300px;
+  left: -70px;
+  transform: rotate(20deg);
+}
+
+/* Top-left small heart */
+.section:nth-child(2) .heart4 {
+  width: 90px; /* smaller size */
+  top: 15px; /* move down slightly */
+  left: 13px; /* move inside so no cutoff */
+  transform: rotate(-15deg);
+}
+
+/* New Top-right heart (your green mark area) */
+.section:nth-child(2) .heart2 {
+  width: 180px;
+  top: 90px;
+  right: 0px;
+  transform: rotate(20deg);
+}
+
+/* Mid-right subtle heart */
+.section:nth-child(2) .heart3 {
+  width: 140px;
+  top: 60%;
+  right: -70px;
+  transform: rotate(-20deg);
+}
+
+/* ==============================
+   PAGE 2 BOTTOM HEARTS
+============================== */
+
+.p2-bottom-hearts {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150%;
+  opacity: 0.5; /* soft romantic */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Blur only quiz content */
+.quiz-content.blur {
+  filter: blur(6px);
+}
+
+/* =====================================================
+   QUIZ INTRO OVERLAY
+===================================================== */
+.quiz-intro {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.intro-box {
+  text-align: center;
+  padding: 20px;
+}
+
+#introText {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #d94f8a;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+#startQuizBtn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  background: #d94f8a;
+  color: white;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+}
+
+/* =====================================================
+   QUIZ QUESTIONS
+===================================================== */
+.quiz-question {
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-question h3 {
+  font-size: 22px;
+  margin-bottom: 50px;
+}
+
+.quiz-option {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 35px;
+  border-radius: 25px;
+  border: 2px solid #d94f8a;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease;
+
+  font-family: "Quicksand", sans-serif;
+  font-size: 15px; /* 🔥 Larger text */
+  font-weight: 600;
+}
+
+/* =====================================================
+   OPTION POPUP
+===================================================== */
+.option-popup {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #d94f8a;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.option-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#passMessage {
+  display: flex;
+
+  justify-content: center;
+}
+
+#passMessage h3 {
+  margin-top: 60px;
+}
+
+/* =====================================================
+   PROGRESS DOTS
+===================================================== */
+.quiz-progress {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.progress-dot {
+  height: 8px;
+  width: 8px;
+  background: #f8b3c9;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #d94f8a;
+  transform: scale(1.3);
+}
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+/* =====================================================
+   PAGE 3 — STORY FRAME
+===================================================== */
+
+.story-container {
+  width: 100%;
+  text-align: center;
+}
+
+.story-title {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  margin-bottom: 80px;
+  color: #d94f8a;
+}
+
+/* Align Page 3 content slightly upward */
+.section:nth-child(3) {
+  align-items: flex-start;
+  padding-top: 30px;
+}
+
+.section:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/bgp3.png") center/cover repeat;
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Inner white frame */
+.story-frame {
+  width: 88%;
+  max-width: 400px;
+  height: 395px; /* 🔥 Increased height */
+  bottom: 18px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px 20px 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Placeholder area */
+.story-photo-placeholder {
+  height: 60%;
+  min-height: 280px; /* Temporary height */
+  background: #f5f5f5;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Story Image */
+.story-image {
+  width: 100%;
+  height: 300px; /* same as placeholder */
+  object-fit: cover;
+  margin-top: -18px;
+  border-radius: 15px;
+  margin-bottom: 2px;
+  transition: opacity 0.4s ease;
+}
+
+.story-image.fade-out {
+  opacity: 0;
+}
+
+/* Caption */
+.story-caption {
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 17px;
+}
+
+.story-caption strong {
+  font-weight: 700;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Inner Next Button */
+/* Story Controls */
+.story-controls {
+  position: absolute;
+  bottom: 15px; /* position above dots */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.story-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid #d94f8a;
+  background: #f8bed7;
+  backdrop-filter: blur(6px);
+  color: #d94f8a;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.story-arrow:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(217, 79, 138, 0.5);
+}
+
+/* =========================
+PAGE 3 TEDDY DECOR
+========================= */
+
+.story-container {
+  position: relative;
+}
+
+/* hanging hearts */
+
+.story-hanging {
+  position: absolute;
+  top: 101.5px;
+  left: 50.4%;
+  transform: translateX(-50%);
+  width: 280px;
+  opacity: 0.789;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* teddy bear */
+
+.story-teddy {
+  position: absolute;
+  top: 51px;
+  left: 70%;
+  transform: translateX(-50%);
+  width: 110px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* couple */
+.p3-couple-outline {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.p3-butterfly {
+  position: absolute;
+  width: 24px;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* LEFT BUTTERFLY */
+
+.left-butterfly {
+  bottom: -90px;
+  left: 70px;
+  animation: butterflyLeft 8s ease-in-out infinite;
+}
+
+/* RIGHT BUTTERFLY */
+
+.right-butterfly {
+  bottom: -50px;
+  right: 60px;
+  animation: butterflyRight 10s ease-in-out infinite;
+}
+/*@keyframes butterflyLeft{
+0%{transform:translate(0,0) rotate(0deg);}
+25%{transform:translate(40px,-40px) rotate(10deg);}
+50%{transform:translate(80px,-20px) rotate(-10deg);}
+75%{transform:translate(40px,30px) rotate(8deg);}
+100%{transform:translate(0,0) rotate(0deg);}
+}
+
+@keyframes butterflyRight{
+0%{transform:translate(0,0) rotate(0deg);}
+25%{transform:translate(-40px,-30px) rotate(-8deg);}
+50%{transform:translate(-80px,-10px) rotate(10deg);}
+75%{transform:translate(-40px,40px) rotate(-5deg);}
+100%{transform:translate(0,0) rotate(0deg);}
+}*/
+
+/* =====================================================
+   STORY PROGRESS DOTS
+===================================================== */
+
+.story-progress {
+  position: absolute;
+  bottom: 20px; /* slightly below arrows */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.story-dot {
+  height: 7px;
+  width: 7px;
+  background: #f8b3c9;
+  border-radius: 50%;
+  margin: 5px;
+  transition: 0.3s ease;
+}
+
+.story-dot.active {
+  background: #d94f8a;
+  transform: scale(1.3);
+}
+
+/* =====================================================
+   STORY LOADING ANIMATION
+===================================================== */
+
+/* Fade white transition */
+.story-frame.loading {
+  background: white;
+  transition: background 0.5s ease;
+}
+
+/* Centered loader */
+.story-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Bar container */
+.loader-bar {
+  position: relative;
+  width: 90%;
+  height: 20px;
+  background: #ffe3ec;
+  border-radius: 20px;
+  border: 2px solid #d94f8a;
+  margin-bottom: 20px;
+}
+
+/* Striped fill */
+.loader-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 20px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ff7aa8,
+    #ff7aa8 10px,
+    #ff9cc2 10px,
+    #ff9cc2 20px
+  );
+  transition: width 3s linear; /* 🔥 Change duration here */
+}
+
+/* Heart image */
+.loader-heart-img {
+  position: absolute;
+  top: -12px; /* slightly floating above bar */
+  left: 0;
+  width: 32px; /* slightly larger than bar height */
+  height: 32px;
+  z-index: 5;
+  transition: left 3s linear;
+}
+
+/* Loading text */
+.loader-text {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: #d94f8a;
+}
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+.letter-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* =====================================================
+   POPUP
+===================================================== */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: #ffd5e7;
+  padding: 25px;
+  border-radius: 12px;
+  border: 3px solid #ff7bb4;
+}
+
+/* =====================================================
+   PAGE 4 — LETTER PAGE
+===================================================== */
+
+.letter-container {
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.section:nth-child(4)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/bgp4.png") center/cover repeat;
+  opacity: 0.9;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.letter-title {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #d94f8a;
+  z-index: 2;
+}
+
+.letter-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.6s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+.letter-card::before {
+  position: relative;
+  z-index: 1;
+  background: url("images/decor/love-pattern.png") center/350px repeat;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("images/decor/love-pattern.png") center/350px repeat;
+  opacity: 0.15;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.letter-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.letter-text {
+  font-family: "Quicksand", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #393939;
+}
+
+.letter-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  background: #d94f8a;
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* =========================
+LETTER WATERMARK
+========================= */
+
+.letter-container {
+  position: relative;
+}
+
+.letter-watermark {
+  position: absolute;
+  bottom: -155px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+}

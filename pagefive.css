@@ -1,0 +1,522 @@
+/* =====================================================
+   PAGE 5 — CELEBRATION PAGE
+===================================================== */
+
+.celebration-section {
+  background: #fadadd;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Black Screen Transition */
+.black-screen {
+  position: absolute;
+  inset: 0;
+  background: #fadadd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+.black-screen.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.black-text {
+  color: rgb(0, 0, 0);
+  font-size: 26px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.black-text {
+  position: relative;
+  z-index: 5;
+}
+
+.p5-photo-frame,
+.p5-balloon-left,
+.p5-balloon-right,
+.p5-garden,
+.p5-Rcupid,
+.p5-Lcupid,
+.p5-couple {
+  opacity: 1;
+  transform: scale(0.95);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.celebration-content.show ~ .p5-photo-frame,
+.celebration-content.show ~ .p5-balloon-left,
+.celebration-content.show ~ .p5-balloon-right,
+.celebration-content.show ~ .p5-garden,
+.celebration-content.show ~ .p5-Rcupid,
+.celebration-content.show ~ .p5-Lcupid,
+.celebration-content.show ~ .p5-couple {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.p5-heart-bg {
+  position: absolute;
+  bottom: -65px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px; /* controls heart size */
+  max-width: 80%;
+  opacity: 0.4; /* watermark effect */
+  pointer-events: none;
+  z-index: 0;
+}
+.celebration-title,
+.celebration-message {
+  position: relative;
+  z-index: 2;
+}
+
+/* Celebration Content */
+.celebration-content {
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: 1s ease;
+}
+
+.celebration-content.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.celebration-title {
+  font-size: 34px;
+  color: #ff4fa3;
+  margin-bottom: 25px;
+  font-family: "Playfair Display", serif;
+  top: 10px;
+}
+
+.celebration-message {
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+  font-family: "Quicksand", sans-serif;
+  margin-bottom: 40px;
+  top: 10px;
+}
+
+.celebration-btn {
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
+  background: #d94f8a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.celebration-btn:hover {
+  transform: scale(1.1);
+}
+
+/* =====================================
+   LOVE LOADER PAGE 5
+===================================== */
+
+.love-loader {
+  position: fixed;
+  inset: 0;
+  background: #fadadd;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
+}
+
+.heart-container {
+  width: 250px;
+  height: 230px;
+  margin-bottom: 30px;
+}
+
+.heart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.love-caption {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.love-bar {
+  width: 220px;
+  height: 12px;
+  border-radius: 20px;
+  border: 2px solid #ff4fa3;
+  overflow: hidden;
+}
+
+.love-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: repeating-linear-gradient(
+    45deg,
+    #ff7aa8,
+    #ff7aa8 10px,
+    #ff9cc2 10px,
+    #ff9cc2 20px
+  );
+  transition: width 5s linear;
+}
+
+/* =====================================
+   SOFT PINK-WHITE WASH
+===================================== */
+.soft-wash {
+  position: absolute;
+  inset: 0;
+  background: #fadadd; /* warm pink-white */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 10000;
+}
+
+/* Subtle romantic glow pulse */
+.heart-soft-glow {
+  animation: softGlow 0.6s ease forwards;
+}
+
+@keyframes softGlow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.03); /* VERY subtle */
+    filter: brightness(1.08);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* Heart blink effect */
+.heart-blink {
+  animation: heartBlink 0.5s ease;
+}
+
+@keyframes heartBlink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*===========last page back button*/
+.dev-back-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background: #ff4fa3;
+  color: white;
+  cursor: pointer;
+}
+
+/* =====================================
+   hug image
+===================================== */
+.p5-couple {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58%;
+  max-width: 420px;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 2;
+}
+.section:first-child {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Couple love pulse */
+
+.couple-pulse {
+  animation: couplePulse 0.4s ease;
+}
+
+@keyframes couplePulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.08);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Couple idle breathing */
+
+.couple-breath {
+  animation: coupleBreath 3.5s ease-in-out infinite;
+}
+
+@keyframes coupleBreath {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.03);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* =========================
+PAGE 5 DECORATIONS
+========================= */
+
+/* top hanging hearts */
+.p5-top-decor {
+  position: absolute;
+  top: -2px;
+  right: -145px;
+  width: 180%;
+  pointer-events: none;
+  z-index: 0;
+}
+.p5-photo-strip {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+  z-index: 3;
+}
+
+.p5-photo-frame {
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  width: 145%;
+  top: -220px; /* start above screen */
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1;
+  opacity: 9;
+  transition:
+    transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.6s ease;
+  transform: translate(-50%, 220px);
+}
+
+.p5-photo-frame:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.celebration-content.show ~ .p5-photo-frame {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+@keyframes dropBounce {
+  0% {
+    transform: translate(-50%, -220px);
+  }
+  70% {
+    transform: translate(-50%, 10px);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+.celebration-content.show ~ .p5-photo-frame {
+  animation: dropBounce 0.9s ease forwards;
+  opacity: 1;
+}
+
+/* balloons */
+.p5-balloon-left {
+  position: absolute;
+  left: -40px;
+  top: 20%;
+  width: 120px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.p5-balloon-right {
+  position: absolute;
+  right: -50px;
+  top: 20%;
+  width: 130px;
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+/* Balloon gentle sway */
+
+.balloon-sway {
+  animation: balloonSway 3.5s ease-in-out infinite;
+}
+
+@keyframes balloonSway {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(3deg); /* ballon movement area*/
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* cupid */ /*Lcupid*/
+.p5-Rcupid {
+  position: absolute;
+  left: -55px;
+  bottom: 150px;
+  width: 130px;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: rotate(20deg);
+}
+
+/*Rcupid*/
+.p5-Lcupid {
+  position: absolute;
+  right: -20px;
+  bottom: 160px;
+  width: 120px;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: rotate(-20deg);
+}
+
+/* Cupid tap bounce animation */
+
+.cupid-bounce {
+  animation: cupidBounce 0.35s ease;
+}
+
+@keyframes cupidBounce {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(3deg);
+  }
+
+  70% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Cupid idle floating */
+
+.cupid-float {
+  animation: cupidFloat 3s ease-in-out infinite;
+}
+
+@keyframes cupidFloat {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* bottom garden */
+.p5-garden {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.p5-emitter {
+  position: absolute;
+  left: 50%;
+  bottom: 140px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.p5-floating {
+  position: absolute;
+  font-size: 20px; /*emoji p5 size*/
+  opacity: 0;
+  animation: p5Float 1.8s ease-out forwards;
+}
+
+@keyframes p5Float {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    transform: translate(-50%, -180px) scale(0.9);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(-50%, -240px) scale(0.8);
+    opacity: 0;
+  }
+}
