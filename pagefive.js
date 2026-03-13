@@ -337,6 +337,9 @@ function spawnEmoji(symbol) {
     setTimeout(() => {
       const e = document.createElement("div");
 
+      const drift = (Math.random() - 0.5) * 140 + "px";
+      e.style.setProperty("--drift", drift);
+
       e.classList.add("p5-floating");
 
       e.innerText = symbol;

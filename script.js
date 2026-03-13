@@ -183,7 +183,7 @@ function checkAnswer(correct, btn) {
 
   const popup = document.createElement("div");
   popup.classList.add("option-popup");
-  popup.innerText = correct ? "👍 Good girl 😌" : "😢 Try again 🥺";
+  popup.innerText = correct ? "very good 👍😌" : "Maranthutala 🥺😢";
 
   btn.appendChild(popup);
 
@@ -312,7 +312,7 @@ function updateStory() {
     if (storyIndex === 4) img.style.objectPosition = "50% 45%";
 
     img.classList.remove("fade-out");
-  }, 200);
+  }, 100);
 
   for (let i = 1; i <= 5; i++) {
     document.getElementById("sDot" + i).classList.remove("active");
@@ -336,7 +336,7 @@ function nextStoryPhoto() {
     setTimeout(() => {
       nextSlide();
       storyEndingTriggered = false;
-    }, 800);
+    }, 100);
   }
 }
 
